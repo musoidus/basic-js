@@ -19,10 +19,24 @@ function renameFiles(names) {
   let currentFile;
   for (let i = 1; i < names.length; i++) {
     currentFile = names[i];
-    for (let j = 0; j < i; j++) {
-      console.log('checking', currentFile, ' and ', names[j]);
+    for (let j = i - 1; j >= 0; j--) {
+      if (currentFile === names[j]) {
+        names[i] = names[i] + '(1)';
+        break;
+      } else if (currentFile === names[j].slice(0, names[j].lastIndexOf('('))) {
+        let idx =
+          Number(
+            names[j].slice(
+              names[j].lastIndexOf('(') + 1,
+              names[j].lastIndexOf(')')
+            )
+          ) + 1;
+        names[i] = names[i] + `(${idx})`;
+        break;
+      }
     }
   }
+  return names;
 }
 
 module.exports = {
